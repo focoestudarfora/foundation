@@ -1,12 +1,7 @@
-import { Client } from "pg";
+import { Client, QueryConfig, QueryResult } from "pg";
 
-interface QueryObject {
-    text: string;
-    values?: unknown[];
-}
-
-async function query(queryObject: QueryObject) {
-    let client;
+async function query(queryObject: string | QueryConfig): Promise<QueryResult<any>> {
+    let client: Client | undefined;
     try {
         client = await getNewClient();
         const result = await client.query(queryObject);
