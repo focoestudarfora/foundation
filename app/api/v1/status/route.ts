@@ -4,12 +4,12 @@ export async function GET() {
     const updatedAt = new Date().toISOString();
 
     const databaseVersionResult = await database.query({
-        text: "SHOW server_version;",
+        text: "SHOW server_version;"
     });
     const databaseVersionValue = databaseVersionResult.rows[0].server_version;
 
     const databaseMaxConnectionsResult = await database.query({
-        text: "SHOW max_connections;",
+        text: "SHOW max_connections;"
     });
     const databaseMaxConnectionsValue =
         databaseMaxConnectionsResult.rows[0].max_connections;
@@ -17,7 +17,7 @@ export async function GET() {
     const databaseName = process.env.POSTGRES_DB;
     const databaseOpenedConnectionsResult = await database.query({
         text: "SELECT count(*)::int FROM pg_stat_activity WHERE datname = $1;",
-        values: [databaseName],
+        values: [databaseName]
     });
     const databaseOpenedConnectionsValue =
         databaseOpenedConnectionsResult.rows[0].count;
@@ -29,15 +29,15 @@ export async function GET() {
                 database: {
                     version: databaseVersionValue,
                     max_connections: parseInt(databaseMaxConnectionsValue),
-                    opened_connections: databaseOpenedConnectionsValue,
-                },
-            },
+                    opened_connections: databaseOpenedConnectionsValue
+                }
+            }
         }),
         {
             status: 200,
             headers: {
-                "Content-Type": "application/json",
-            },
-        },
+                "Content-Type": "application/json"
+            }
+        }
     );
 }

@@ -22,7 +22,7 @@ const runMigrations = async (dryRun: boolean) => {
             dryRun,
             dir: resolve("infra", "migrations"),
             direction: "up",
-            migrationsTable: "pgmigrations",
+            migrationsTable: "pgmigrations"
         });
     } catch (error) {
         console.error("Migration error:", error);

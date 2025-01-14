@@ -1,6 +1,8 @@
 import { Client, QueryConfig, QueryResult } from "pg";
 
-async function query(queryObject: string | QueryConfig): Promise<QueryResult<any>> {
+async function query(
+    queryObject: string | QueryConfig
+): Promise<QueryResult<any>> {
     let client: Client | undefined;
     try {
         client = await getNewClient();
@@ -14,7 +16,7 @@ async function query(queryObject: string | QueryConfig): Promise<QueryResult<any
             await client.end().catch((endError) => {
                 console.error(
                     "Error closing the database connection:",
-                    endError,
+                    endError
                 );
             });
         }
@@ -30,7 +32,7 @@ async function getNewClient() {
         user: process.env.POSTGRES_USER,
         database: process.env.POSTGRES_DB,
         password: process.env.POSTGRES_PASSWORD,
-        ssl: getSSLValues(),
+        ssl: getSSLValues()
     });
 
     await client.connect();
@@ -39,14 +41,14 @@ async function getNewClient() {
 
 const database = {
     query,
-    getNewClient,
+    getNewClient
 };
 export default database;
 
 function getSSLValues() {
     if (process.env.NODE_ENV === "production") {
         return {
-            rejectUnauthorized: false,
+            rejectUnauthorized: false
         };
     }
     return false;
